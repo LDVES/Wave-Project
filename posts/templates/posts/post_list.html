@@ -1,0 +1,53 @@
+{% extends 'base.html'  %}
+{% block body %}
+<div class="container">
+    <br>
+    <h1 class="title is-1 has-text-centered">Aktualności</h1>
+    <hr>
+    <br>
+    {% for post in posts %}
+    <div class="card">
+  <header class="card-header">
+    <p class="card-header-title">
+      {{ post.title }}
+    </p>
+    <a href="#" class="card-header-icon" aria-label="more options">
+      <span class="icon">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </a>
+  </header>
+  <div class="card-content">
+    <div class="content">
+      {{ post.content | safe }}
+    </div>
+      <small><p>{{ post.created_at }}</p></small>
+  </div>
+
+</div>
+    <h1 class="has-text-centerd"></h1>
+    <br>
+    {% endfor %}
+
+    <!-- Paginator !-->
+    {% if is_paginated %}
+    <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
+        {% if page_obj.has_previous %}
+            <a class="pagination-previous" href="?page={{ page_obj.previous_page_number }}">Poprzedni</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+          <a class="pagination-next" href="?page={{ page_obj.next_page_number }}">Następny</a>
+        {% endif %}
+        {% for i in paginator.page_range %}
+          <ul class="pagination-list">
+              {% if page_obj.number == i %}
+                <li><a class="pagination-link is-current" >{{ i }}</a></li>
+              {% else %}
+              <li><a class="pagination-link" href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}
